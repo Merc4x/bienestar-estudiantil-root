@@ -1,0 +1,54 @@
+const initialData = {
+  users: [
+    { id: 1, name: 'Juan Diego', email: 'estudiante@tdea.edu.co', role: 'Estudiante', status: 'Activo', program: 'Ingeniería de Software' },
+    { id: 2, name: 'Laura Gómez', email: 'profesional@tdea.edu.co', role: 'Profesional', status: 'Activo', specialty: 'Psicología' },
+    { id: 3, name: 'Administrador Root', email: 'admin@tdea.edu.co', role: 'Administrador', status: 'Activo' },
+    { id: 4, name: 'Carlos Pérez', email: 'carlos@tdea.edu.co', role: 'Estudiante', status: 'Activo', program: 'Ingeniería de Software' },
+    { id: 5, name: 'Ana Torres', email: 'ana@tdea.edu.co', role: 'Profesional', status: 'Activo', specialty: 'Medicina' }
+  ],
+  services: [
+    { id: 1, name: 'Psicología', cat: 'Psicología', icon: '🧠', desc: 'Orientación psicológica y acompañamiento individual.', active: true },
+    { id: 2, name: 'Medicina', cat: 'Salud', icon: '♥', desc: 'Atención y orientación en salud integral.', active: true },
+    { id: 3, name: 'Deportes', cat: 'Deportes', icon: '⚽', desc: 'Actividades físicas, recreativas y deportivas.', active: true },
+    { id: 4, name: 'Cultura', cat: 'Cultura', icon: '♪', desc: 'Talleres, arte y actividades culturales.', active: true }
+  ],
+  professionals: [
+    { id: 1, name: 'Laura Gómez', specialty: 'Psicología', email: 'profesional@tdea.edu.co', active: true },
+    { id: 2, name: 'Ana Torres', specialty: 'Medicina', email: 'ana@tdea.edu.co', active: true },
+    { id: 3, name: 'Andrés Ruiz', specialty: 'Deportes', email: 'andres@tdea.edu.co', active: true }
+  ],
+  appointments: [
+    { id: 101, student: 'Juan Diego', professional: 'Laura Gómez', service: 'Psicología', date: '2026-10-08', time: '09:00', status: 'Programada' },
+    { id: 102, student: 'Carlos Pérez', professional: 'Laura Gómez', service: 'Psicología', date: '2026-10-08', time: '10:00', status: 'Confirmada' },
+    { id: 103, student: 'Juan Diego', professional: 'Ana Torres', service: 'Medicina', date: '2026-10-12', time: '14:00', status: 'Programada' }
+  ],
+  activities: [
+    { id: 1, name: 'Taller de manejo del estrés', cat: 'Salud', date: '2026-10-15', time: '15:00', capacity: 30, enrolled: 18, status: 'Activo', place: 'Bloque B · Aula 204' },
+    { id: 2, name: 'Torneo relámpago', cat: 'Deportes', date: '2026-10-20', time: '10:00', capacity: 40, enrolled: 32, status: 'Activo', place: 'Cancha principal' },
+    { id: 3, name: 'Cine foro universitario', cat: 'Cultura', date: '2026-10-22', time: '17:00', capacity: 50, enrolled: 21, status: 'Activo', place: 'Auditorio' }
+  ],
+  enrollments: [
+    { id: 1, activityId: 1, user: 'Juan Diego', date: '2026-09-30' }
+  ],
+  attentions: [
+    { id: 1, student: 'Juan Diego', professional: 'Laura Gómez', date: '2026-09-25', type: 'Psicológica', notes: 'Orientación inicial y acuerdos de seguimiento.' }
+  ],
+  followups: [
+    { id: 1, attentionId: 1, date: '2026-10-05', note: 'Seguimiento programado.', professional: 'Laura Gómez' }
+  ],
+  notifications: [
+    { id: 1, text: 'Tu cita de Psicología está programada para el 8 de octubre a las 09:00.', date: '2026-10-05', read: false },
+    { id: 2, text: 'Tienes una actividad inscrita: Taller de manejo del estrés.', date: '2026-10-05', read: false }
+  ],
+  audit: [
+    { date: '2026-10-05 18:30', actor: 'Administrador Root', action: 'Inicio del sistema', detail: 'Sesión de demostración' }
+  ],
+  availability: [
+    { professional: 'Laura Gómez', date: '2026-10-08', slots: ['08:00', '09:00', '10:00', '11:00', '14:00'] },
+    { professional: 'Laura Gómez', date: '2026-10-09', slots: ['08:00', '09:00', '13:00', '14:00', '15:00'] },
+    { professional: 'Ana Torres', date: '2026-10-12', slots: ['13:00', '14:00', '15:00', '16:00'] },
+    { professional: 'Andrés Ruiz', date: '2026-10-20', slots: ['09:00', '10:00', '11:00', '12:00'] }
+  ]
+};
+
+module.exports = { initialData };
