@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageHead, StatCard, StatusBadge, Modal } from './Common';
+import { ServiceLogo } from './Icons';
 
 export function StudentDashboard({ state, user, onNavigate }) {
   const myA = state.appointments.filter((a) => a.student === user.name);
@@ -16,10 +17,10 @@ export function StudentDashboard({ state, user, onNavigate }) {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard number={upcoming} label="Citas activas" icon="◷" />
-        <StatCard number={myEnrollments} label="Inscripciones" icon="✓" />
-        <StatCard number={unreadNotifs} label="Notificaciones" icon="●" />
-        <StatCard number={activeServices} label="Servicios disponibles" icon="◫" />
+        <StatCard number={upcoming} label="Citas activas" iconType="appointments" />
+        <StatCard number={myEnrollments} label="Inscripciones" iconType="enrollments" />
+        <StatCard number={unreadNotifs} label="Notificaciones" iconType="notifications" />
+        <StatCard number={activeServices} label="Servicios disponibles" iconType="services" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
@@ -111,8 +112,8 @@ export function StudentServices({ state, onStartAppointment }) {
             <div key={s.id} className="root-card flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start gap-3 mb-3">
-                  <div className="w-11 h-11 rounded-[13px] bg-[#192b57] text-[#7fb0ff] grid place-items-center text-xs font-bold uppercase">
-                    {s.icon}
+                  <div className="w-11 h-11 rounded-[13px] bg-[#192b57] text-[#7fb0ff] grid place-items-center">
+                    <ServiceLogo category={s.cat} className="w-5 h-5" />
                   </div>
                   <span className="root-badge">{s.cat}</span>
                 </div>

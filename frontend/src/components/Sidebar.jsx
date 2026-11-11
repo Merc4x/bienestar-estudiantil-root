@@ -1,4 +1,5 @@
 import React from 'react';
+import { RootLogo, NavIcon } from './Icons';
 
 export const MENUS = {
   student: [
@@ -51,9 +52,7 @@ export function Sidebar({
       }`}
     >
       <div className="flex items-center gap-3 px-2.5 pt-1 pb-6 border-b border-rootBorder mb-4">
-        <div className="w-[38px] h-[38px] rounded-xl bg-rootBlue grid place-items-center font-extrabold text-white">
-          R
-        </div>
+        <RootLogo className="w-10 h-10 shrink-0" />
         <div>
           <strong className="block text-sm text-white">Bienestar Estudiantil</strong>
           <span className="text-[11px] text-rootMuted">Root · TdeA</span>
@@ -82,12 +81,18 @@ export function Sidebar({
             <button
               key={key}
               onClick={() => onNavigate(key)}
-              className={`w-full px-3 py-2.5 rounded-[10px] text-left flex items-center text-sm transition-colors ${
+              className={`w-full px-3 py-2.5 rounded-[10px] text-left flex items-center gap-2.5 text-sm transition-colors ${
                 active
                   ? 'bg-[#191e2c] text-white font-medium shadow-[inset_3px_0_0_#2563eb]'
                   : 'text-[#9da6b8] hover:bg-[#191e2c] hover:text-white'
               }`}
             >
+              <NavIcon
+                name={key}
+                className={`w-4 h-4 shrink-0 ${
+                  active ? 'text-blue-400' : 'text-[#788296]'
+                }`}
+              />
               <span>{label}</span>
             </button>
           );
@@ -98,8 +103,9 @@ export function Sidebar({
         </div>
         <button
           onClick={onLogout}
-          className="w-full px-3 py-2.5 rounded-[10px] text-left flex items-center text-sm text-[#9da6b8] hover:bg-[#191e2c] hover:text-white transition-colors"
+          className="w-full px-3 py-2.5 rounded-[10px] text-left flex items-center gap-2.5 text-sm text-[#9da6b8] hover:bg-[#191e2c] hover:text-white transition-colors"
         >
+          <NavIcon name="logout" className="w-4 h-4 shrink-0 text-[#788296]" />
           <span>Cerrar sesión</span>
         </button>
       </nav>

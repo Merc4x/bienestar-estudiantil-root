@@ -1,9 +1,10 @@
-# Bienestar Estudiantil — Root
-**Tecnológico de Antioquia (TdeA)**
-
-Plataforma web para la gestión integral de los servicios de bienestar universitario, agendamiento de citas, inscripción a actividades institucionales, seguimiento profesional y administración operativa.
-
-**Demo desplegada:** [https://merc4x.github.io/bienestar-estudiantil-root/](https://merc4x.github.io/bienestar-estudiantil-root/)
+<div align="center">
+  <img src="./frontend/public/logo.svg" alt="Root Bienestar Estudiantil Logo" width="72" height="72" />
+  <h1>Bienestar Estudiantil — Root</h1>
+  <p><strong>Tecnológico de Antioquia (TdeA)</strong></p>
+  <p>Plataforma web para la gestión integral de los servicios de bienestar universitario, agendamiento de citas, inscripción a actividades institucionales, seguimiento profesional y administración operativa.</p>
+  <p><a href="https://merc4x.github.io/bienestar-estudiantil-root/"><strong>Ver Demo Desplegada</strong></a></p>
+</div>
 
 ---
 

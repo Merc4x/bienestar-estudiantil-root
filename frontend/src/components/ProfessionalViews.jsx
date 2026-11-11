@@ -234,10 +234,10 @@ export function ProDashboard({
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard number={activeCount} label="Citas activas" icon="◷" />
-        <StatCard number={completedCount} label="Completadas" icon="✓" />
-        <StatCard number={attentionsCount} label="Atenciones registradas" icon="▤" />
-        <StatCard number={followupsCount} label="Seguimientos" icon="↗" />
+        <StatCard number={activeCount} label="Citas activas" iconType="appointments" />
+        <StatCard number={completedCount} label="Completadas" iconType="enrollments" />
+        <StatCard number={attentionsCount} label="Atenciones registradas" iconType="attention" />
+        <StatCard number={followupsCount} label="Seguimientos" iconType="followup" />
       </div>
 
       <div className="root-card mt-4">

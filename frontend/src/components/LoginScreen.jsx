@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from './Common';
+import { RootLogo } from './Icons';
 
 export function LoginScreen({ onLogin, showToast, backendMode }) {
   const [email, setEmail] = useState('estudiante@tdea.edu.co');
@@ -42,9 +43,7 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
     >
       <div className="w-full max-w-[430px] bg-rootPanel border border-rootBorder rounded-[22px] p-7 shadow-rootCard">
         <div className="flex flex-col items-center text-center gap-2 mb-6">
-          <div className="w-11 h-11 rounded-xl bg-rootBlue grid place-items-center font-extrabold text-lg text-white shadow-lg shadow-blue-600/30">
-            R
-          </div>
+          <RootLogo className="w-12 h-12 shadow-lg shadow-blue-600/30 rounded-2xl" />
           <strong className="text-lg text-white">Bienestar Estudiantil</strong>
           <div className="text-xs text-rootMuted">Root · Tecnológico de Antioquia</div>
           <span

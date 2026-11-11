@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavIcon } from './Icons';
 
 export const PAGE_TITLES = {
   dashboard: 'Dashboard',
@@ -80,9 +81,11 @@ export function Topbar({
 
         <button
           onClick={() => onNavigate('notifications')}
-          className="root-btn py-2 px-3"
+          className="root-btn py-2 px-3 flex items-center gap-2"
         >
-          Notificaciones {unreadCount > 0 && <span className="text-blue-400 font-bold">({unreadCount})</span>}
+          <NavIcon name="notifications" className="w-4 h-4 text-blue-400" />
+          <span>Notificaciones</span>
+          {unreadCount > 0 && <span className="text-blue-400 font-bold">({unreadCount})</span>}
         </button>
 
         <div

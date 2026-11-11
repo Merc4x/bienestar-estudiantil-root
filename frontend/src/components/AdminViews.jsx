@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageHead, StatCard, StatusBadge, BarChart, Modal } from './Common';
 import { ProAppointmentTable } from './ProfessionalViews';
+import { ServiceLogo } from './Icons';
 
 export function AdminDashboard({ state }) {
   const activeActivities = state.activities.filter((a) => a.status === 'Activo').length;
@@ -13,10 +14,10 @@ export function AdminDashboard({ state }) {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard number={state.users.length} label="Usuarios registrados" icon="♙" />
-        <StatCard number={state.professionals.length} label="Profesionales" icon="◎" />
-        <StatCard number={state.appointments.length} label="Citas" icon="◷" />
-        <StatCard number={activeActivities} label="Actividades activas" icon="✦" />
+        <StatCard number={state.users.length} label="Usuarios registrados" iconType="users" />
+        <StatCard number={state.professionals.length} label="Profesionales" iconType="professionals" />
+        <StatCard number={state.appointments.length} label="Citas" iconType="appointments" />
+        <StatCard number={activeActivities} label="Actividades activas" iconType="activities" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
@@ -483,7 +484,12 @@ export function AdminServices({
             {state.services.map((s) => (
               <tr key={s.id} className="border-b border-rootBorder text-[13px] text-[#dbe0ea]">
                 <td className="py-3.5 px-2.5 whitespace-nowrap">
-                  {s.name}
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-[#192b57] text-[#7fb0ff] grid place-items-center shrink-0">
+                      <ServiceLogo category={s.cat} className="w-4 h-4" />
+                    </span>
+                    <span>{s.name}</span>
+                  </div>
                 </td>
                 <td className="py-3.5 px-2.5">{s.cat}</td>
                 <td className="py-3.5 px-2.5">{s.desc}</td>
@@ -773,9 +779,9 @@ export function AdminReports({ state }) {
         subtitle="Indicadores para la toma de decisiones administrativas."
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard number={effectiveAppts} label="Citas efectivas" icon="◷" />
-        <StatCard number={state.attentions.length} label="Atenciones" icon="▤" />
-        <StatCard number={totalEnrolled} label="Inscripciones" icon="✓" />
+        <StatCard number={effectiveAppts} label="Citas efectivas" iconType="appointments" />
+        <StatCard number={state.attentions.length} label="Atenciones" iconType="attention" />
+        <StatCard number={totalEnrolled} label="Inscripciones" iconType="enrollments" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">

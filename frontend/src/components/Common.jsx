@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatLogo } from './Icons';
 
 export function PageHead({ title, subtitle, action }) {
   return (
@@ -12,10 +13,15 @@ export function PageHead({ title, subtitle, action }) {
   );
 }
 
-export function StatCard({ number, label }) {
+export function StatCard({ number, label, iconType = 'appointments' }) {
   return (
-    <div className="root-card min-h-[110px] flex flex-col justify-between">
-      <div className="text-[13px] text-rootMuted font-medium">{label}</div>
+    <div className="root-card min-h-[120px] flex flex-col justify-between">
+      <div className="flex items-center justify-between">
+        <div className="text-[13px] text-rootMuted font-medium">{label}</div>
+        <div className="w-9 h-9 rounded-xl bg-[#182649] text-blue-400 grid place-items-center">
+          <StatLogo type={iconType} className="w-4 h-4" />
+        </div>
+      </div>
       <div className="text-3xl font-extrabold mt-2 text-white">{number}</div>
     </div>
   );
