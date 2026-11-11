@@ -3,6 +3,7 @@ import { api, SEED_DATA } from './services/api';
 import { LoginScreen } from './components/LoginScreen';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
+import { FullScreenLoader, TabTransitionSkeleton } from './components/Common';
 import {
   StudentDashboard,
   StudentServices,
@@ -46,6 +47,12 @@ export default function App() {
   const [toastMsg, setToastMsg] = useState('');
   const [wizardDefaults, setWizardDefaults] = useState(null);
 
+  // Animation states
+  const [bootLoading, setBootLoading] = useState(true);
+  const [loaderText, setLoaderText] = useState('Iniciando plataforma Root · TdeA...');
+  const [tabSwitching, setTabSwitching] = useState(false);
+  const [progressKey, setProgressKey] = useState(0);
+
   const showToast = useCallback((msg) => {
     setToastMsg(msg);
     setTimeout(() => {
@@ -54,6 +61,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const start = Date.now();
     api
       .fetchState()
       .then((res) => {
@@ -62,8 +70,28 @@ export default function App() {
       })
       .catch(() => {
         setBackendMode('github-pages-local');
+      })
+      .finally(() => {
+        const elapsed = Date.now() - start;
+        const remaining = Math.max(0, 650 - elapsed);
+        setTimeout(() => setBootLoading(false), remaining);
       });
   }, []);
+
+  const triggerTabTransition = (nextPage) => {
+    if (nextPage === page) {
+      setSidebarOpen(false);
+      return;
+    }
+    setSidebarOpen(false);
+    setProgressKey((k) => k + 1);
+    setTabSwitching(true);
+    setTimeout(() => {
+      setPage(nextPage);
+      setTabSwitching(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 190);
+  };
 
   const handleLogin = async (email, password) => {
     try {
@@ -71,14 +99,70 @@ export default function App() {
       if (res.state) setState(res.state);
       if (res.mode) setBackendMode(res.mode);
       const u = res.user;
-      setUser(u);
-      const newRole =
-        u.role === 'Estudiante'
-          ? 'student'
-          : u.role === 'Profesional'
-          ? 'professional'
-          : 'admin';
+      setLoaderText(`Bienvenido, ${u.name}. Preparando tu panel...`);
+      setBootLoading(true);
+
+      setTimeout(() => {
+        setUser(u);
+        const newRole =
+          u.role === 'Estudiante'
+            ? 'student'
+            : u.role === 'Profesional'
+            ? 'professional'
+            : 'admin';
+        setRole(newRole);
+        setPage(
+          newRole === 'student'
+            ? 'dashboard'
+            : newRole === 'professional'
+            ? 'pro-dashboard'
+            : 'admin-dashboard'
+        );
+        sessionStorage.setItem('rootSessionReact', 'active');
+        setAuthenticated(true);
+        setBootLoading(false);
+        showToast('Sesión iniciada correctamente.');
+      }, 520);
+    } catch (err) {
+      showToast(err.message || 'Credenciales inválidas.');
+    }
+  };
+
+  const handleLogout = () => {
+    setLoaderText('Cerrando sesión de forma segura...');
+    setBootLoading(true);
+    setTimeout(() => {
+      sessionStorage.removeItem('rootSessionReact');
+      setAuthenticated(false);
+      setBootLoading(false);
+    }, 380);
+  };
+
+  const handleSwitchRole = (newRole) => {
+    const roleNames = {
+      student: 'Estudiante',
+      professional: 'Profesional',
+      admin: 'Administrador'
+    };
+    setLoaderText(`Cambiando al entorno de ${roleNames[newRole] || 'usuario'}...`);
+    setBootLoading(true);
+    setSidebarOpen(false);
+
+    setTimeout(() => {
       setRole(newRole);
+      const matchedUser =
+        state.users.find((u) =>
+          u.role
+            .toLowerCase()
+            .startsWith(
+              newRole === 'student'
+                ? 'est'
+                : newRole === 'professional'
+                ? 'prof'
+                : 'admin'
+            )
+        ) || state.users[0];
+      setUser(matchedUser);
       setPage(
         newRole === 'student'
           ? 'dashboard'
@@ -86,50 +170,16 @@ export default function App() {
           ? 'pro-dashboard'
           : 'admin-dashboard'
       );
-      sessionStorage.setItem('rootSessionReact', 'active');
-      setAuthenticated(true);
-      showToast('Sesión iniciada correctamente.');
-    } catch (err) {
-      showToast(err.message || 'Credenciales inválidas.');
-    }
-  };
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('rootSessionReact');
-    setAuthenticated(false);
-  };
-
-  const handleSwitchRole = (newRole) => {
-    setRole(newRole);
-    const matchedUser =
-      state.users.find((u) =>
-        u.role
-          .toLowerCase()
-          .startsWith(
-            newRole === 'student'
-              ? 'est'
-              : newRole === 'professional'
-              ? 'prof'
-              : 'admin'
-          )
-      ) || state.users[0];
-    setUser(matchedUser);
-    setPage(
-      newRole === 'student'
-        ? 'dashboard'
-        : newRole === 'professional'
-        ? 'pro-dashboard'
-        : 'admin-dashboard'
-    );
-    setSidebarOpen(false);
+      setBootLoading(false);
+    }, 440);
   };
 
   const handleNavigate = (targetPage) => {
-    setPage(targetPage);
-    setSidebarOpen(false);
+    triggerTabTransition(targetPage);
   };
 
   const handleResetDB = async () => {
+    setProgressKey((k) => k + 1);
     const res = await api.resetDB();
     if (res.state) setState(res.state);
     if (res.mode) setBackendMode(res.mode);
@@ -138,7 +188,7 @@ export default function App() {
 
   const startAppointment = (service, professional = null) => {
     setWizardDefaults({ service, professional });
-    setPage('appointment');
+    triggerTabTransition('appointment');
   };
 
   // Actions
@@ -527,17 +577,23 @@ export default function App() {
 
   return (
     <>
+      {bootLoading && <FullScreenLoader label={loaderText} />}
+
+      {progressKey > 0 && <div key={progressKey} className="top-progress-bar" />}
+
       {!authenticated ? (
-        <LoginScreen
-          onLogin={handleLogin}
-          showToast={showToast}
-          backendMode={backendMode}
-        />
+        <div className="page-enter">
+          <LoginScreen
+            onLogin={handleLogin}
+            showToast={showToast}
+            backendMode={backendMode}
+          />
+        </div>
       ) : (
         <div className="flex min-h-screen">
           {sidebarOpen && (
             <div
-              className="fixed inset-0 bg-black/50 z-20 md:hidden"
+              className="fixed inset-0 bg-black/50 z-20 md:hidden modal-backdrop-anim"
               onClick={() => setSidebarOpen(false)}
             />
           )}
@@ -562,14 +618,20 @@ export default function App() {
               onResetDB={handleResetDB}
             />
             <section className="p-5 md:p-7 max-w-[1500px] mx-auto">
-              {renderPageContent()}
+              {tabSwitching ? (
+                <TabTransitionSkeleton />
+              ) : (
+                <div key={`${role}-${page}`} className="page-enter">
+                  {renderPageContent()}
+                </div>
+              )}
             </section>
           </main>
         </div>
       )}
 
       {toastMsg && (
-        <div className="fixed right-5 bottom-5 bg-[#121826] border border-[#2d3852] px-4 py-3 rounded-xl shadow-rootCard z-50 text-sm text-white animate-bounce">
+        <div className="toast-anim fixed right-5 bottom-5 bg-[#121826] border border-[#2d3852] px-4 py-3 rounded-xl shadow-rootCard z-50 text-sm text-white">
           {toastMsg}
         </div>
       )}
