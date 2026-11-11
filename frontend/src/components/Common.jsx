@@ -12,14 +12,11 @@ export function PageHead({ title, subtitle, action }) {
   );
 }
 
-export function StatCard({ number, label, icon }) {
+export function StatCard({ number, label }) {
   return (
-    <div className="root-card min-h-[125px] flex flex-col justify-between">
-      <div className="text-xl text-rootBlueLight">{icon}</div>
-      <div>
-        <div className="text-3xl font-extrabold mt-2 text-white">{number}</div>
-        <div className="text-[13px] text-rootMuted mt-0.5">{label}</div>
-      </div>
+    <div className="root-card min-h-[110px] flex flex-col justify-between">
+      <div className="text-[13px] text-rootMuted font-medium">{label}</div>
+      <div className="text-3xl font-extrabold mt-2 text-white">{number}</div>
     </div>
   );
 }

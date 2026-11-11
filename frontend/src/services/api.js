@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'rootBienestarReactDB';
+const STORAGE_KEY = 'rootBienestarReactDB_v3';
 
 export const SEED_DATA = {
   users: [
@@ -385,7 +385,7 @@ export const api = {
           const s = db.services.find(x => x.id === Number(id));
           if (s) { s.name = name; s.cat = cat; s.desc = desc; }
         } else {
-          db.services.push({ id: Date.now(), name, cat, desc, active: true, icon: '✦' });
+          db.services.push({ id: Date.now(), name, cat, desc, active: true, icon: cat.slice(0, 3) });
         }
         localLog(db, actor || 'Administrador Root', 'Gestión de servicios', name);
         return { ok: true, state: db };

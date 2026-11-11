@@ -464,8 +464,7 @@ export function AppointmentWizard({
       {step === 4 && (
         <div>
           <div className="root-card text-center py-8 space-y-3">
-            <div className="text-5xl text-green-400">✓</div>
-            <h3 className="text-xl font-bold text-white">¡Cita solicitada!</h3>
+            <h3 className="text-xl font-bold text-white">Cita solicitada</h3>
             <p className="text-sm text-rootMuted">
               La franja fue bloqueada y la confirmación quedó registrada.
             </p>
@@ -482,7 +481,7 @@ export function AppointmentWizard({
           </div>
           <div className="flex justify-end gap-2.5 mt-4">
             <button onClick={resetWizard} className="root-btn root-btn-primary">
-              ＋ Agendar otra cita
+              Agendar otra cita
             </button>
             <button onClick={() => onNavigate('appointments')} className="root-btn">
               Ir a mis citas
@@ -528,7 +527,7 @@ export function StudentAppointments({
         subtitle="Consulta tus citas en orden cronológico y su estado."
         action={
           <button onClick={onNewAppointment} className="root-btn root-btn-primary">
-            ＋ Nueva cita
+            Nueva cita
           </button>
         }
       />

@@ -2,35 +2,35 @@ import React from 'react';
 
 export const MENUS = {
   student: [
-    ['dashboard', '▦', 'Dashboard'],
-    ['services', '◫', 'Servicios'],
-    ['professionals', '◎', 'Profesionales y disponibilidad'],
-    ['appointment', '＋', 'Solicitar cita'],
-    ['appointments', '◷', 'Mis citas'],
-    ['activities', '✦', 'Actividades y eventos'],
-    ['enrollments', '✓', 'Mis inscripciones'],
-    ['notifications', '●', 'Notificaciones'],
-    ['profile', '⚙', 'Perfil y seguridad']
+    ['dashboard', 'Dashboard'],
+    ['services', 'Servicios'],
+    ['professionals', 'Profesionales y disponibilidad'],
+    ['appointment', 'Solicitar cita'],
+    ['appointments', 'Mis citas'],
+    ['activities', 'Actividades y eventos'],
+    ['enrollments', 'Mis inscripciones'],
+    ['notifications', 'Notificaciones'],
+    ['profile', 'Perfil y seguridad']
   ],
   professional: [
-    ['pro-dashboard', '▦', 'Dashboard / Agenda'],
-    ['availability', '◷', 'Disponibilidad'],
-    ['pro-appointments', '◎', 'Gestión de citas'],
-    ['attention', '▤', 'Registro de atenciones'],
-    ['history', '◌', 'Historial confidencial'],
-    ['followup', '↗', 'Seguimiento de casos'],
-    ['notifications', '●', 'Notificaciones']
+    ['pro-dashboard', 'Dashboard / Agenda'],
+    ['availability', 'Disponibilidad'],
+    ['pro-appointments', 'Gestión de citas'],
+    ['attention', 'Registro de atenciones'],
+    ['history', 'Historial confidencial'],
+    ['followup', 'Seguimiento de casos'],
+    ['notifications', 'Notificaciones']
   ],
   admin: [
-    ['admin-dashboard', '▦', 'Dashboard ejecutivo'],
-    ['users', '♙', 'Usuarios y roles'],
-    ['professionals-admin', '◎', 'Profesionales'],
-    ['services-admin', '◫', 'Servicios'],
-    ['appointments-admin', '◷', 'Citas'],
-    ['activities-admin', '✦', 'Actividades'],
-    ['notifications', '●', 'Notificaciones'],
-    ['reports', '▥', 'Reportes y estadísticas'],
-    ['audit', '◌', 'Auditoría']
+    ['admin-dashboard', 'Dashboard ejecutivo'],
+    ['users', 'Usuarios y roles'],
+    ['professionals-admin', 'Profesionales'],
+    ['services-admin', 'Servicios'],
+    ['appointments-admin', 'Citas'],
+    ['activities-admin', 'Actividades'],
+    ['notifications', 'Notificaciones'],
+    ['reports', 'Reportes y estadísticas'],
+    ['audit', 'Auditoría']
   ]
 };
 
@@ -56,7 +56,7 @@ export function Sidebar({
         </div>
         <div>
           <strong className="block text-sm text-white">Bienestar Estudiantil</strong>
-          <span className="text-[11px] text-rootMuted">Root · TdeA (React + Node)</span>
+          <span className="text-[11px] text-rootMuted">Root · TdeA</span>
         </div>
       </div>
 
@@ -76,19 +76,18 @@ export function Sidebar({
       </div>
 
       <nav className="space-y-1">
-        {items.map(([key, icon, label]) => {
+        {items.map(([key, label]) => {
           const active = page === key;
           return (
             <button
               key={key}
               onClick={() => onNavigate(key)}
-              className={`w-full px-3 py-2.5 rounded-[10px] text-left flex items-center gap-2.5 text-sm transition-colors ${
+              className={`w-full px-3 py-2.5 rounded-[10px] text-left flex items-center text-sm transition-colors ${
                 active
-                  ? 'bg-[#191e2c] text-white shadow-[inset_3px_0_0_#2563eb]'
+                  ? 'bg-[#191e2c] text-white font-medium shadow-[inset_3px_0_0_#2563eb]'
                   : 'text-[#9da6b8] hover:bg-[#191e2c] hover:text-white'
               }`}
             >
-              <span>{icon}</span>
               <span>{label}</span>
             </button>
           );
@@ -99,9 +98,8 @@ export function Sidebar({
         </div>
         <button
           onClick={onLogout}
-          className="w-full px-3 py-2.5 rounded-[10px] text-left flex items-center gap-2.5 text-sm text-[#9da6b8] hover:bg-[#191e2c] hover:text-white transition-colors"
+          className="w-full px-3 py-2.5 rounded-[10px] text-left flex items-center text-sm text-[#9da6b8] hover:bg-[#191e2c] hover:text-white transition-colors"
         >
-          <span>↪</span>
           <span>Cerrar sesión</span>
         </button>
       </nav>

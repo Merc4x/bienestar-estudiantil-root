@@ -483,7 +483,7 @@ export function AdminServices({
             {state.services.map((s) => (
               <tr key={s.id} className="border-b border-rootBorder text-[13px] text-[#dbe0ea]">
                 <td className="py-3.5 px-2.5 whitespace-nowrap">
-                  {s.icon} {s.name}
+                  {s.name}
                 </td>
                 <td className="py-3.5 px-2.5">{s.cat}</td>
                 <td className="py-3.5 px-2.5">{s.desc}</td>

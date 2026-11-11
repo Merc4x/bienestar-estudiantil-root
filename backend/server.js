@@ -380,7 +380,7 @@ app.post('/api/services', (req, res) => {
       name,
       cat: cat || 'Psicología',
       desc,
-      icon: icon || '✦',
+      icon: icon || (cat || 'Srv').slice(0, 3),
       active: true
     });
   }
