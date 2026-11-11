@@ -12,7 +12,7 @@
 @layer components {
   .root-card {
     @apply bg-rootPanel border border-rootBorder rounded-2xl p-5 shadow-rootCard transition-all duration-300;
-    animation: cardFadeUp 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: cardFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   .root-card:hover {
     border-color: rgba(59, 130, 246, 0.38);
@@ -57,36 +57,32 @@
   }
 }
 
-/* Staggered children inside grids */
-.grid > .root-card:nth-child(1) { animation-delay: 0.03s; }
-.grid > .root-card:nth-child(2) { animation-delay: 0.09s; }
-.grid > .root-card:nth-child(3) { animation-delay: 0.15s; }
-.grid > .root-card:nth-child(4) { animation-delay: 0.21s; }
-.grid > .root-card:nth-child(5) { animation-delay: 0.27s; }
-.grid > .root-card:nth-child(6) { animation-delay: 0.33s; }
+/* Staggered children inside grids (slower, clearly visible cascade) */
+.grid > .root-card:nth-child(1) { animation-delay: 0.08s; }
+.grid > .root-card:nth-child(2) { animation-delay: 0.18s; }
+.grid > .root-card:nth-child(3) { animation-delay: 0.28s; }
+.grid > .root-card:nth-child(4) { animation-delay: 0.38s; }
+.grid > .root-card:nth-child(5) { animation-delay: 0.48s; }
+.grid > .root-card:nth-child(6) { animation-delay: 0.58s; }
 
 /* Table rows staggered fade */
 tbody tr {
-  animation: rowFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: background-color 0.18s ease;
+  animation: rowFadeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: background-color 0.2s ease;
 }
 tbody tr:hover {
   background-color: rgba(37, 99, 235, 0.05);
 }
-tbody tr:nth-child(1) { animation-delay: 0.04s; }
-tbody tr:nth-child(2) { animation-delay: 0.08s; }
-tbody tr:nth-child(3) { animation-delay: 0.12s; }
-tbody tr:nth-child(4) { animation-delay: 0.16s; }
-tbody tr:nth-child(5) { animation-delay: 0.20s; }
-tbody tr:nth-child(6) { animation-delay: 0.24s; }
+tbody tr:nth-child(1) { animation-delay: 0.08s; }
+tbody tr:nth-child(2) { animation-delay: 0.16s; }
+tbody tr:nth-child(3) { animation-delay: 0.24s; }
+tbody tr:nth-child(4) { animation-delay: 0.32s; }
+tbody tr:nth-child(5) { animation-delay: 0.40s; }
+tbody tr:nth-child(6) { animation-delay: 0.48s; }
 
 /* Page Transition Wrapper */
 .page-enter {
-  animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.page-Switching {
-  animation: pageExit 0.18s ease-in forwards;
+  animation: pageEnter 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Top Progress Bar */
@@ -94,18 +90,18 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
+  height: 3.5px;
   z-index: 60;
   background: linear-gradient(90deg, #2563eb, #60a5fa, #38bdf8);
-  box-shadow: 0 0 14px rgba(59, 130, 246, 0.85);
-  animation: topProgressSweep 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.9);
+  animation: topProgressSweep 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Orbital Spinner */
 .orbital-loader {
   position: relative;
-  width: 76px;
-  height: 76px;
+  width: 82px;
+  height: 82px;
   display: grid;
   place-items: center;
 }
@@ -113,26 +109,26 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 .orbital-loader::after {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -9px;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 2.5px solid transparent;
 }
 .orbital-loader::before {
   border-top-color: #3b82f6;
-  border-right-color: rgba(59, 130, 246, 0.3);
-  animation: spinOrbit 1s linear infinite;
+  border-right-color: rgba(59, 130, 246, 0.35);
+  animation: spinOrbit 1.45s linear infinite;
 }
 .orbital-loader::after {
-  inset: -15px;
+  inset: -17px;
   border-bottom-color: #60a5fa;
-  border-left-color: rgba(96, 165, 250, 0.2);
-  animation: spinOrbitReverse 1.6s linear infinite;
+  border-left-color: rgba(96, 165, 250, 0.25);
+  animation: spinOrbitReverse 2.2s linear infinite;
 }
 
 /* Chart animations */
 .bar-animated {
   transform-origin: bottom;
-  animation: barGrow 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: barGrow 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .donut-chart {
@@ -142,7 +138,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
   margin: 14px auto;
   background: conic-gradient(#2563eb 0 46%, #8b5cf6 46% 72%, #22c55e 72% 100%);
   position: relative;
-  animation: donutPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: donutPop 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .donut-chart::after {
   content: "100%";
@@ -157,21 +153,40 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 }
 
 .modal-backdrop-anim {
-  animation: fadeIn 0.2s ease-out both;
+  animation: fadeIn 0.35s ease-out both;
 }
 .modal-box-anim {
-  animation: modalPop 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: modalPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .toast-anim {
-  animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: toastSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.loader-progress-fill {
+  animation: loaderFill 1.3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes loaderFill {
+  0% {
+    width: 12%;
+    margin-left: 0%;
+  }
+  50% {
+    width: 65%;
+    margin-left: 20%;
+  }
+  100% {
+    width: 100%;
+    margin-left: 0%;
+  }
 }
 
 @keyframes pageEnter {
   0% {
     opacity: 0;
-    transform: translateY(14px) scale(0.992);
-    filter: blur(4px);
+    transform: translateY(22px) scale(0.985);
+    filter: blur(6px);
   }
   100% {
     opacity: 1;
@@ -180,22 +195,10 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
   }
 }
 
-@keyframes pageExit {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-6px) scale(0.995);
-    filter: blur(2px);
-  }
-}
-
 @keyframes cardFadeUp {
   0% {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(24px);
   }
   100% {
     opacity: 1;
@@ -206,7 +209,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 @keyframes rowFadeIn {
   0% {
     opacity: 0;
-    transform: translateX(-8px);
+    transform: translateX(-14px);
   }
   100% {
     opacity: 1;
@@ -220,7 +223,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
     opacity: 1;
   }
   75% {
-    width: 92%;
+    width: 90%;
     opacity: 1;
   }
   100% {
@@ -254,7 +257,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 
 @keyframes donutPop {
   0% {
-    transform: scale(0.75) rotate(-45deg);
+    transform: scale(0.7) rotate(-65deg);
     opacity: 0;
   }
   100% {
@@ -271,7 +274,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 @keyframes modalPop {
   0% {
     opacity: 0;
-    transform: translateY(18px) scale(0.95);
+    transform: translateY(24px) scale(0.94);
   }
   100% {
     opacity: 1;
@@ -282,7 +285,7 @@ tbody tr:nth-child(6) { animation-delay: 0.24s; }
 @keyframes toastSlideIn {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(24px) scale(0.94);
   }
   100% {
     opacity: 1;

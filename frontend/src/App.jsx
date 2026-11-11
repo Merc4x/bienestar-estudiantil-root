@@ -73,7 +73,7 @@ export default function App() {
       })
       .finally(() => {
         const elapsed = Date.now() - start;
-        const remaining = Math.max(0, 650 - elapsed);
+        const remaining = Math.max(0, 1550 - elapsed);
         setTimeout(() => setBootLoading(false), remaining);
       });
   }, []);
@@ -90,7 +90,7 @@ export default function App() {
       setPage(nextPage);
       setTabSwitching(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 190);
+    }, 520);
   };
 
   const handleLogin = async (email, password) => {
@@ -122,7 +122,7 @@ export default function App() {
         setAuthenticated(true);
         setBootLoading(false);
         showToast('Sesión iniciada correctamente.');
-      }, 520);
+      }, 1350);
     } catch (err) {
       showToast(err.message || 'Credenciales inválidas.');
     }
@@ -135,7 +135,7 @@ export default function App() {
       sessionStorage.removeItem('rootSessionReact');
       setAuthenticated(false);
       setBootLoading(false);
-    }, 380);
+    }, 900);
   };
 
   const handleSwitchRole = (newRole) => {
@@ -171,7 +171,7 @@ export default function App() {
           : 'admin-dashboard'
       );
       setBootLoading(false);
-    }, 440);
+    }, 1150);
   };
 
   const handleNavigate = (targetPage) => {

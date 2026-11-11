@@ -23,8 +23,8 @@ export function StatCard({ number, label, iconType = 'appointments' }) {
       return;
     }
     let start = 0;
-    const duration = 520;
-    const stepTime = 24;
+    const duration = 1050;
+    const stepTime = 30;
     const steps = Math.max(1, Math.floor(duration / stepTime));
     const increment = target / steps;
 
@@ -81,7 +81,7 @@ export function BarChart() {
             key={i}
             style={{
               height: `${v}%`,
-              animationDelay: `${i * 0.06}s`
+              animationDelay: `${i * 0.11}s`
             }}
             className="bar-animated flex-1 rounded-t-xl bg-gradient-to-t from-rootBlue to-[#60a5fa] transition-all duration-300 hover:brightness-110"
             title={`${days[i]}: ${v}%`}
@@ -128,11 +128,11 @@ export function FullScreenLoader({ label = 'Cargando entorno Root · TdeA...' })
     <div
       className="fixed inset-0 z-50 grid place-items-center p-6 modal-backdrop-anim"
       style={{
-        background: 'radial-gradient(circle at center, rgba(24,41,82,0.92), rgba(11,13,19,0.97) 65%)',
-        backdropFilter: 'blur(10px)'
+        background: 'radial-gradient(circle at center, rgba(24,41,82,0.94), rgba(11,13,19,0.98) 65%)',
+        backdropFilter: 'blur(12px)'
       }}
     >
-      <div className="flex flex-col items-center text-center gap-6">
+      <div className="flex flex-col items-center text-center gap-7">
         <div className="orbital-loader">
           <RootLogo className="w-12 h-12 rounded-2xl shadow-lg shadow-blue-600/40" />
         </div>
@@ -142,25 +142,29 @@ export function FullScreenLoader({ label = 'Cargando entorno Root · TdeA...' })
           </div>
           <div className="text-xs text-blue-300/90 font-medium">{label}</div>
         </div>
-        <div className="w-48 h-1.5 bg-[#1a2234] rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 animate-pulse w-full" />
+        <div className="w-56 h-1.5 bg-[#1a2234] rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 loader-progress-fill rounded-full" />
         </div>
       </div>
     </div>
   );
 }
 
-export function TabTransitionSkeleton() {
+export function TabTransitionSkeleton({ label = 'Cargando módulo...' }) {
   return (
-    <div className="space-y-5 animate-pulse py-2">
-      <div className="flex justify-between items-center">
-        <div className="space-y-2">
+    <div className="space-y-5 py-2 modal-backdrop-anim">
+      <div className="flex items-center gap-3 text-xs text-blue-400 font-medium mb-1">
+        <span className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin inline-block" />
+        <span>{label}</span>
+      </div>
+      <div className="flex justify-between items-center animate-pulse">
+        <div className="space-y-2.5">
           <div className="h-7 w-56 bg-[#182032] rounded-lg" />
           <div className="h-4 w-80 bg-[#141a29] rounded-md" />
         </div>
         <div className="h-10 w-32 bg-[#182032] rounded-xl" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
         {[1, 2, 3, 4].map((n) => (
           <div
             key={n}
@@ -174,7 +178,7 @@ export function TabTransitionSkeleton() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-pulse">
         <div className="h-48 bg-rootPanel border border-rootBorder rounded-2xl p-5" />
         <div className="h-48 bg-rootPanel border border-rootBorder rounded-2xl p-5" />
       </div>
