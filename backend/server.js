@@ -445,5 +445,5 @@ app.patch('/api/activities/:id/cancel', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Servidor Node.js + Express de Bienestar Estudiantil (Root) activo en http://localhost:${PORT}`);
+  console.log(`Servidor Node.js + Express de Bienestar Estudiantil (Root) activo en http://localhost:${PORT}`);
 });

@@ -7,10 +7,10 @@ const initialData = {
     { id: 5, name: 'Ana Torres', email: 'ana@tdea.edu.co', role: 'Profesional', status: 'Activo', specialty: 'Medicina' }
   ],
   services: [
-    { id: 1, name: 'Psicología', cat: 'Psicología', icon: '🧠', desc: 'Orientación psicológica y acompañamiento individual.', active: true },
-    { id: 2, name: 'Medicina', cat: 'Salud', icon: '♥', desc: 'Atención y orientación en salud integral.', active: true },
-    { id: 3, name: 'Deportes', cat: 'Deportes', icon: '⚽', desc: 'Actividades físicas, recreativas y deportivas.', active: true },
-    { id: 4, name: 'Cultura', cat: 'Cultura', icon: '♪', desc: 'Talleres, arte y actividades culturales.', active: true }
+    { id: 1, name: 'Psicología', cat: 'Psicología', icon: 'Psi', desc: 'Orientación psicológica y acompañamiento individual.', active: true },
+    { id: 2, name: 'Medicina', cat: 'Salud', icon: 'Med', desc: 'Atención y orientación en salud integral.', active: true },
+    { id: 3, name: 'Deportes', cat: 'Deportes', icon: 'Dep', desc: 'Actividades físicas, recreativas y deportivas.', active: true },
+    { id: 4, name: 'Cultura', cat: 'Cultura', icon: 'Cul', desc: 'Talleres, arte y actividades culturales.', active: true }
   ],
   professionals: [
     { id: 1, name: 'Laura Gómez', specialty: 'Psicología', email: 'profesional@tdea.edu.co', active: true },

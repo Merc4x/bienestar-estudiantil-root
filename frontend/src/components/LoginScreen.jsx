@@ -53,8 +53,8 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
             }`}
           >
             {backendMode === 'node'
-              ? '● Backend Node.js Conectado'
-              : '● Modo GitHub Pages (Local DB)'}
+              ? 'API Node.js activa'
+              : 'Modo local (GitHub Pages)'}
           </span>
         </div>
 
@@ -99,7 +99,7 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
 
         <div className="mt-4 p-3 rounded-xl bg-[#0e1320] border border-rootBorder text-xs text-rootMuted">
           <div className="font-semibold text-slate-300 mb-2">
-            Accesos rápidos de demostración (contraseña: <code className="text-blue-400">123456</code>):
+            Cuentas de demostración (contraseña: <code className="text-blue-400">123456</code>):
           </div>
           <div className="flex flex-wrap gap-1.5">
             <button
@@ -107,21 +107,21 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
               onClick={() => quickFill('estudiante@tdea.edu.co')}
               className="root-btn root-btn-sm"
             >
-              🎓 Estudiante
+              Estudiante
             </button>
             <button
               type="button"
               onClick={() => quickFill('profesional@tdea.edu.co')}
               className="root-btn root-btn-sm"
             >
-              🩺 Profesional
+              Profesional
             </button>
             <button
               type="button"
               onClick={() => quickFill('admin@tdea.edu.co')}
               className="root-btn root-btn-sm"
             >
-              🛡️ Administrador
+              Administrador
             </button>
           </div>
         </div>

@@ -45,7 +45,7 @@
       "id": 1,
       "name": "Psicología",
       "cat": "Psicología",
-      "icon": "🧠",
+      "icon": "Psi",
       "desc": "Orientación psicológica y acompañamiento individual.",
       "active": true
     },
@@ -53,7 +53,7 @@
       "id": 2,
       "name": "Medicina",
       "cat": "Salud",
-      "icon": "♥",
+      "icon": "Med",
       "desc": "Atención y orientación en salud integral.",
       "active": true
     },
@@ -61,7 +61,7 @@
       "id": 3,
       "name": "Deportes",
       "cat": "Deportes",
-      "icon": "⚽",
+      "icon": "Dep",
       "desc": "Actividades físicas, recreativas y deportivas.",
       "active": true
     },
@@ -69,7 +69,7 @@
       "id": 4,
       "name": "Cultura",
       "cat": "Cultura",
-      "icon": "♪",
+      "icon": "Cul",
       "desc": "Talleres, arte y actividades culturales.",
       "active": true
     }

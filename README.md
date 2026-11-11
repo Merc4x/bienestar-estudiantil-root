@@ -1,95 +1,70 @@
-# 🎓 Bienestar Estudiantil — Root | Tecnológico de Antioquia (TdeA)
+# Bienestar Estudiantil — Root
+**Tecnológico de Antioquia (TdeA)**
 
-![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Express_API-339933?logo=node.js&logoColor=white)
+Plataforma web para la gestión integral de los servicios de bienestar universitario, agendamiento de citas, inscripción a actividades institucionales, seguimiento profesional y administración operativa.
 
-🔗 **Demo en vivo (GitHub Pages):** [https://merc4x.github.io/bienestar-estudiantil-root/](https://merc4x.github.io/bienestar-estudiantil-root/)
+**Demo desplegada:** [https://merc4x.github.io/bienestar-estudiantil-root/](https://merc4x.github.io/bienestar-estudiantil-root/)
 
 ---
 
-## 📌 ¿Para qué sirve este proyecto?
+## Descripción General
 
-**Bienestar Estudiantil — Root** es una plataforma web integral diseñada para gestionar los servicios de bienestar universitario del **Tecnológico de Antioquia (TdeA)**.
-
-Su propósito es centralizar en un solo sistema la reserva de citas médicas y psicológicas, la inscripción a eventos culturales y deportivos, el seguimiento clínico confidencial por parte de los especialistas y la supervisión administrativa y estadística de la institución.
+**Bienestar Estudiantil — Root** centraliza los procesos de atención y acompañamiento estudiantil del Tecnológico de Antioquia en una sola aplicación dividida por perfiles de acceso. Permite a los estudiantes programar citas y participar en talleres, a los profesionales gestionar su agenda e historial clínico confidencial, y a los administradores supervisar métricas, usuarios y auditoría del sistema.
 
 ---
 
-## 👥 Módulos y Funcionalidades por Rol
+## Arquitectura y Tecnologías
 
-### 1. 🎓 Estudiante
-- **Dashboard Personal:** Resumen en tiempo real de citas activas, actividades inscritas, notificaciones y accesos rápidos.
-- **Catálogo de Servicios:** Búsqueda y filtrado por categoría (*Psicología, Salud/Medicina, Deportes y Cultura*).
-- **Directorio de Profesionales:** Consulta de especialistas activos y visualización de sus horarios disponibles.
-- **Asistente de Solicitud de Citas (Wizard de 4 pasos):** Selección guiada de servicio y profesional → fecha en calendario → franja horaria disponible → confirmación con bloqueo automático de cupo.
-- **Gestión de Mis Citas:** Historial cronológico, filtrado por estado y cancelación con registro obligatorio de motivo.
-- **Actividades y Talleres:** Inscripción en línea con barra de progreso de aforo en tiempo real y gestión de inscripciones.
-- **Perfil y Seguridad:** Actualización de datos personales/académicos y cambio de contraseña.
-
-### 2. 🩺 Profesional
-- **Agenda Profesional:** Indicadores de citas activas, completadas, atenciones registradas y seguimientos.
-- **Gestión de Disponibilidad:** Creación, edición y bloqueo de fechas y franjas horarias de atención (validando que no existan citas activas antes de bloquear).
-- **Gestión y Reasignación de Citas:** Actualización de estados (*Programada, Confirmada, Atendida, Completada, Cancelada*), notas de observación y reprogramación de fecha/hora/profesional.
-- **Registro de Atenciones e Historial Confidencial:** Creación y edición de evoluciones clínicas/psicológicas confidenciales y trazabilidad de casos.
-- **Seguimiento de Casos:** Bitácora de notas de evolución vinculadas a los pacientes atendidos.
-
-### 3. 🛡️ Administrador
-- **Dashboard Ejecutivo y Reportes:** KPIs globales, gráficas de demanda semanal y distribución porcentual por tipo de servicio.
-- **Gestión de Usuarios y Roles (CRUD):** Creación, edición, activación/desactivación de cuentas institucionales (`@tdea.edu.co`) y asignación de privilegios.
-- **Gestión de Profesionales, Servicios, Citas y Actividades:** Administración completa de la oferta de bienestar universitario.
-- **Auditoría del Sistema:** Registro inmutable con fecha, hora, actor, acción y detalle de cada operación realizada en la plataforma.
-
----
-
-## 🛠️ Tecnologías Utilizadas
+El proyecto está estructurado bajo una arquitectura cliente-servidor separada en dos módulos principales (`frontend` y `backend`):
 
 ### Frontend (`/frontend`)
-| Tecnología | Uso en el proyecto |
-| :--- | :--- |
-| **React 18** | Arquitectura basada en componentes funcionales y Hooks (`useState`, `useEffect`, `useCallback`). |
-| **Tailwind CSS 3** | Diseño responsivo, tema oscuro personalizado (*Root Dark UI*), tarjetas, tablas, badges y gráficas. |
-| **Vite 5** | Empaquetador ultrarrápido y servidor de desarrollo con recarga en caliente (HMR). |
-| **Smart API Client** | Conector híbrido que consume la API REST de Node.js y provee respaldo automático en `localStorage` cuando se ejecuta en GitHub Pages. |
+- **React 18:** Construcción de la interfaz de usuario mediante componentes modulares y manejo de estado con Hooks.
+- **Tailwind CSS 3:** Sistema de diseño responsivo en modo oscuro personalizado, tablas de datos, modales e indicadores visuales.
+- **Vite 5:** Entorno de desarrollo y empaquetador de producción optimizado.
+- **Cliente API Híbrido (`src/services/api.js`):** Conecta la interfaz con la API REST en Node.js durante la ejecución local o en servidor, e incluye persistencia automática en `localStorage` para entornos estáticos como GitHub Pages.
 
 ### Backend (`/backend`)
-| Tecnología | Uso en el proyecto |
+- **Node.js & Express:** Servidor API RESTful encargado de la lógica de negocio, validaciones de disponibilidad, control de cupos y registro de auditoría.
+- **CORS:** Configuración de políticas de acceso entre el cliente y el servidor.
+- **Persistencia JSON (`data/db.json`):** Almacenamiento local estructurado con inicialización automática a partir de datos semilla (`data/seed.js`).
+
+---
+
+## Módulos del Sistema por Rol
+
+| Rol | Módulos Principales |
 | :--- | :--- |
-| **Node.js** | Entorno de ejecución en servidor para la lógica de negocio y persistencia de datos. |
-| **Express.js** | Framework para la API RESTful (`/api/auth`, `/api/appointments`, `/api/activities`, `/api/users`, etc.). |
-| **CORS** | Middleware para habilitar la comunicación segura entre el cliente React y el servidor Node. |
-| **JSON File DB (`db.json`)** | Almacenamiento persistente en disco con semilla automática (`seed.js`) y punto de restauración (`/api/reset`). |
+| **Estudiante** | Dashboard personal, catálogo y filtro de servicios (Psicología, Salud, Deportes, Cultura), directorio de profesionales con consulta de horarios, asistente de reserva de citas en 4 pasos, historial y cancelación de citas, inscripción a actividades y talleres, notificaciones y configuración de perfil. |
+| **Profesional** | Panel de agenda diaria, configuración y bloqueo de disponibilidad por fecha y franja horaria, actualización de estados y reasignación de citas, registro de evoluciones confidenciales, historial clínico y seguimiento de casos. |
+| **Administrador** | Dashboard ejecutivo con indicadores y gráficas de demanda, gestión de usuarios y asignación de roles, directorio administrativo de profesionales, catálogo de servicios, supervisión global de citas y actividades, reportes estadísticos y bitácora de auditoría. |
 
 ---
 
-## 🔑 Credenciales de Demostración
+## Credenciales de Prueba
 
-En la pantalla de inicio de sesión puedes usar los **botones de acceso rápido** o ingresar manualmente con cualquiera de estos usuarios (contraseña para todos: **`123456`**):
+Para probar los diferentes perfiles en el entorno de demostración, utiliza cualquiera de las siguientes cuentas institucionales:
 
-| Rol | Correo Institucional | Contraseña |
+| Perfil | Correo Institucional | Contraseña |
 | :--- | :--- | :--- |
-| **Estudiante** | `estudiante@tdea.edu.co` | `123456` |
-| **Profesional** | `profesional@tdea.edu.co` | `123456` |
-| **Administrador** | `admin@tdea.edu.co` | `123456` |
-
-> 💡 **Tip:** Dentro de la aplicación también puedes alternar instantáneamente entre las vistas de *Estudiante*, *Profesional* y *Administrador* desde el selector **"Vista de demostración"** ubicado en el menú lateral izquierdo.
+| Estudiante | `estudiante@tdea.edu.co` | `123456` |
+| Profesional | `profesional@tdea.edu.co` | `123456` |
+| Administrador | `admin@tdea.edu.co` | `123456` |
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura de Directorios
 
 ```text
 Bienestar Estudiantil — Root/
-├── package.json              # Scripts globales (instalación, ejecución y despliegue)
-├── README.md                 # Documentación del proyecto
-├── backend/                  # API REST en Node.js + Express (Puerto 3001)
+├── package.json
+├── README.md
+├── backend/
 │   ├── package.json
-│   ├── server.js             # Rutas y controladores de la API
+│   ├── server.js
 │   └── data/
-│       ├── seed.js           # Datos semilla iniciales del TdeA
-│       └── db.json           # Base de datos JSON autogenerada
-└── frontend/                 # Aplicación React + Vite + Tailwind CSS (Puerto 5173)
+│       ├── seed.js
+│       └── db.json
+└── frontend/
     ├── package.json
     ├── vite.config.js
     ├── tailwind.config.js
@@ -99,7 +74,7 @@ Bienestar Estudiantil — Root/
         ├── App.jsx
         ├── index.css
         ├── services/
-        │   └── api.js        # Cliente HTTP a Node.js + Fallback para GitHub Pages
+        │   └── api.js
         └── components/
             ├── Common.jsx
             ├── LoginScreen.jsx
@@ -112,7 +87,7 @@ Bienestar Estudiantil — Root/
 
 ---
 
-## 🚀 Instalación y Ejecución Local
+## Instalación y Uso Local
 
 1. **Clonar el repositorio:**
    ```bash
@@ -120,19 +95,20 @@ Bienestar Estudiantil — Root/
    cd bienestar-estudiantil-root
    ```
 
-2. **Instalar dependencias (Backend y Frontend):**
+2. **Instalar dependencias:**
    ```bash
    npm run install:all
    ```
 
-3. **Iniciar el servidor Backend (Node.js en puerto `3001`):**
+3. **Iniciar el servidor Backend (puerto 3001):**
    ```bash
    npm run dev:backend
    ```
 
-4. **En otra terminal, iniciar el Frontend (React + Vite en puerto `5173`):**
+4. **Iniciar el cliente Frontend (puerto 5173):**
    ```bash
    npm run dev:frontend
    ```
 
-5. Abrir en el navegador: **`http://localhost:5173`**
+5. **Abrir en el navegador:**
+   `http://localhost:5173`

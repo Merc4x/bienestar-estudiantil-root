@@ -61,13 +61,13 @@ export function Topbar({
           title={
             backendMode === 'node'
               ? 'Conectado a la API REST en Node.js + Express (puerto 3001)'
-              : 'Ejecutando con base de datos en navegador (ideal para GitHub Pages)'
+              : 'Ejecutando con base de datos en navegador'
           }
           className={`hidden sm:inline-flex root-badge ${
             backendMode === 'node' ? 'root-badge-green' : 'root-badge-blue'
           }`}
         >
-          {backendMode === 'node' ? '⚡ API Node.js' : '☁️ Modo GitHub Pages'}
+          {backendMode === 'node' ? 'API Node.js' : 'Modo Local'}
         </span>
 
         <button
@@ -75,14 +75,14 @@ export function Topbar({
           className="root-btn root-btn-sm hidden sm:inline-flex"
           title="Restaurar datos de demostración"
         >
-          ↺ Reset Demo
+          Restaurar datos
         </button>
 
         <button
           onClick={() => onNavigate('notifications')}
           className="root-btn py-2 px-3"
         >
-          🔔 {unreadCount > 0 && <span className="text-blue-400 font-bold">({unreadCount})</span>}
+          Notificaciones {unreadCount > 0 && <span className="text-blue-400 font-bold">({unreadCount})</span>}
         </button>
 
         <div

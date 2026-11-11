@@ -11,7 +11,7 @@ export function StudentDashboard({ state, user, onNavigate }) {
   return (
     <div>
       <PageHead
-        title={`Hola, ${user.name.split(' ')[0]} 👋`}
+        title={`Hola, ${user.name.split(' ')[0]}`}
         subtitle="Gestiona tus servicios de bienestar desde un solo lugar."
       />
 
@@ -111,7 +111,7 @@ export function StudentServices({ state, onStartAppointment }) {
             <div key={s.id} className="root-card flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start gap-3 mb-3">
-                  <div className="w-11 h-11 rounded-[13px] bg-[#192b57] text-[#7fb0ff] grid place-items-center text-xl">
+                  <div className="w-11 h-11 rounded-[13px] bg-[#192b57] text-[#7fb0ff] grid place-items-center text-xs font-bold uppercase">
                     {s.icon}
                   </div>
                   <span className="root-badge">{s.cat}</span>
