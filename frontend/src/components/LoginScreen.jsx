@@ -1,36 +1,51 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Modal } from './Common';
 import { RootLogo } from './Icons';
+import { cn } from '../lib/utils';
 
 export function LoginScreen({ onLogin, showToast, backendMode }) {
-  const [email, setEmail] = useState('estudiante@tdea.edu.co');
-  const [password, setPassword] = useState('123456');
   const [recoveryOpen, setRecoveryOpen] = useState(false);
-  const [recoveryEmail, setRecoveryEmail] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await onLogin(email, password);
-    } finally {
-      setLoading(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting }
+  } = useForm({
+    defaultValues: {
+      email: 'estudiante@tdea.edu.co',
+      password: '123456'
     }
+  });
+
+  const {
+    register: registerRecovery,
+    handleSubmit: handleRecoverySubmit,
+    reset: resetRecovery,
+    formState: { errors: recoveryErrors }
+  } = useForm({
+    defaultValues: {
+      recoveryEmail: ''
+    }
+  });
+
+  const onSubmitLogin = async (data) => {
+    await onLogin(data.email, data.password);
   };
 
   const quickFill = (demoEmail) => {
-    setEmail(demoEmail);
-    setPassword('123456');
+    setValue('email', demoEmail, { shouldValidate: true });
+    setValue('password', '123456', { shouldValidate: true });
   };
 
-  const handleRecover = () => {
-    if (!recoveryEmail.trim() || !recoveryEmail.includes('@')) {
+  const onSubmitRecovery = (data) => {
+    if (!data.recoveryEmail.trim() || !data.recoveryEmail.includes('@')) {
       showToast('Ingresa un correo válido.');
       return;
     }
     setRecoveryOpen(false);
-    setRecoveryEmail('');
+    resetRecovery();
     showToast('Enlace de recuperación simulado enviado al correo.');
   };
 
@@ -47,9 +62,10 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
           <strong className="text-lg text-white">Bienestar Estudiantil</strong>
           <div className="text-xs text-rootMuted">Root · Tecnológico de Antioquia</div>
           <span
-            className={`mt-1 root-badge ${
+            className={cn(
+              'mt-1 root-badge',
               backendMode === 'node' ? 'root-badge-green' : 'root-badge-blue'
-            }`}
+            )}
           >
             {backendMode === 'node'
               ? 'API Node.js activa'
@@ -57,16 +73,26 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
           </span>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3.5">
+        <form onSubmit={handleSubmit(onSubmitLogin)} className="space-y-3.5" noValidate>
           <div>
             <label className="root-label">Correo institucional</label>
             <input
               type="email"
               className="root-input"
               placeholder="usuario@tdea.edu.co"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', {
+                required: 'El correo institucional es obligatorio',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Ingresa un correo electrónico válido'
+                }
+              })}
             />
+            {errors.email && (
+              <span className="text-[11px] text-red-400 mt-1 block">
+                {errors.email.message}
+              </span>
+            )}
           </div>
           <div>
             <label className="root-label">Contraseña</label>
@@ -74,17 +100,23 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
               type="password"
               className="root-input"
               placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register('password', {
+                required: 'Ingresa tu contraseña'
+              })}
             />
+            {errors.password && (
+              <span className="text-[11px] text-red-400 mt-1 block">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={isSubmitting}
             className="root-btn root-btn-primary w-full mt-2 py-3 font-semibold"
           >
-            {loading ? 'Ingresando...' : 'Ingresar'}
+            {isSubmitting ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
 
@@ -131,26 +163,38 @@ export function LoginScreen({ onLogin, showToast, backendMode }) {
         title="Recuperar contraseña"
         onClose={() => setRecoveryOpen(false)}
       >
-        <p className="text-sm text-rootMuted mb-4">
-          Ingresa tu correo institucional. En producción se enviaría un enlace seguro con token de recuperación.
-        </p>
-        <div>
-          <label className="root-label">Correo</label>
-          <input
-            className="root-input"
-            placeholder="usuario@tdea.edu.co"
-            value={recoveryEmail}
-            onChange={(e) => setRecoveryEmail(e.target.value)}
-          />
-        </div>
-        <div className="flex justify-end gap-2.5 mt-5">
-          <button className="root-btn" onClick={() => setRecoveryOpen(false)}>
-            Cancelar
-          </button>
-          <button className="root-btn root-btn-primary" onClick={handleRecover}>
-            Enviar enlace
-          </button>
-        </div>
+        <form onSubmit={handleRecoverySubmit(onSubmitRecovery)} noValidate>
+          <p className="text-sm text-rootMuted mb-4">
+            Ingresa tu correo institucional. En producción se enviaría un enlace seguro con token de recuperación.
+          </p>
+          <div>
+            <label className="root-label">Correo</label>
+            <input
+              className="root-input"
+              placeholder="usuario@tdea.edu.co"
+              {...registerRecovery('recoveryEmail', {
+                required: 'Ingresa tu correo institucional'
+              })}
+            />
+            {recoveryErrors.recoveryEmail && (
+              <span className="text-[11px] text-red-400 mt-1 block">
+                {recoveryErrors.recoveryEmail.message}
+              </span>
+            )}
+          </div>
+          <div className="flex justify-end gap-2.5 mt-5">
+            <button
+              type="button"
+              className="root-btn"
+              onClick={() => setRecoveryOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button type="submit" className="root-btn root-btn-primary">
+              Enviar enlace
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );

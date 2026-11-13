@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api, SEED_DATA } from './services/api';
+import { useAppStore } from './store/useAppStore';
 import { LoginScreen } from './components/LoginScreen';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
@@ -35,38 +37,63 @@ import {
 } from './components/AdminViews';
 
 export default function App() {
-  const [state, setState] = useState(SEED_DATA);
-  const [role, setRole] = useState('student');
-  const [user, setUser] = useState(SEED_DATA.users[0]);
-  const [page, setPage] = useState('dashboard');
-  const [authenticated, setAuthenticated] = useState(
-    () => sessionStorage.getItem('rootSessionReact') === 'active'
-  );
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [backendMode, setBackendMode] = useState('node');
-  const [toastMsg, setToastMsg] = useState('');
-  const [wizardDefaults, setWizardDefaults] = useState(null);
+  const queryClient = useQueryClient();
 
-  // Animation states
-  const [bootLoading, setBootLoading] = useState(true);
-  const [loaderText, setLoaderText] = useState('Iniciando plataforma Root · TdeA...');
-  const [tabSwitching, setTabSwitching] = useState(false);
-  const [progressKey, setProgressKey] = useState(0);
+  const {
+    role,
+    user,
+    page,
+    authenticated,
+    sidebarOpen,
+    backendMode,
+    toastMsg,
+    wizardDefaults,
+    bootLoading,
+    loaderText,
+    tabSwitching,
+    progressKey,
+    setRole,
+    setUser,
+    setPage,
+    setAuthenticated,
+    setSidebarOpen,
+    setBackendMode,
+    setWizardDefaults,
+    setBootLoading,
+    setLoaderText,
+    setTabSwitching,
+    incrementProgressKey,
+    showToast
+  } = useAppStore();
 
-  const showToast = useCallback((msg) => {
-    setToastMsg(msg);
-    setTimeout(() => {
-      setToastMsg((prev) => (prev === msg ? '' : prev));
-    }, 2800);
-  }, []);
+  // TanStack Query: carga y caché del estado general desde la API Node.js / Fallback
+  const { data: queryResult } = useQuery({
+    queryKey: ['bienestarState'],
+    queryFn: () => api.fetchState(),
+    initialData: { ok: true, state: SEED_DATA, mode: 'github-pages-local' }
+  });
+
+  const state = queryResult?.state || SEED_DATA;
+
+  const syncQueryState = (res) => {
+    if (res?.state) {
+      queryClient.setQueryData(['bienestarState'], (old) => ({
+        ...old,
+        state: res.state,
+        mode: res.mode || old?.mode
+      }));
+    }
+    if (res?.mode) {
+      setBackendMode(res.mode);
+    }
+  };
 
   useEffect(() => {
     const start = Date.now();
     api
       .fetchState()
       .then((res) => {
-        if (res.state) setState(res.state);
-        if (res.mode) setBackendMode(res.mode);
+        syncQueryState(res);
       })
       .catch(() => {
         setBackendMode('github-pages-local');
@@ -84,7 +111,7 @@ export default function App() {
       return;
     }
     setSidebarOpen(false);
-    setProgressKey((k) => k + 1);
+    incrementProgressKey();
     setTabSwitching(true);
     setTimeout(() => {
       setPage(nextPage);
@@ -96,8 +123,7 @@ export default function App() {
   const handleLogin = async (email, password) => {
     try {
       const res = await api.login(email, password);
-      if (res.state) setState(res.state);
-      if (res.mode) setBackendMode(res.mode);
+      syncQueryState(res);
       const u = res.user;
       setLoaderText(`Bienvenido, ${u.name}. Preparando tu panel...`);
       setBootLoading(true);
@@ -179,10 +205,9 @@ export default function App() {
   };
 
   const handleResetDB = async () => {
-    setProgressKey((k) => k + 1);
+    incrementProgressKey();
     const res = await api.resetDB();
-    if (res.state) setState(res.state);
-    if (res.mode) setBackendMode(res.mode);
+    syncQueryState(res);
     showToast('Datos de demostración restaurados.');
   };
 
@@ -191,11 +216,11 @@ export default function App() {
     triggerTabTransition('appointment');
   };
 
-  // Actions
+  // Actions sincronizadas con TanStack Query
   const handleCreateAppointment = async (payload) => {
     try {
       const res = await api.createAppointment(payload);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Cita programada exitosamente.');
     } catch (err) {
       showToast(err.message);
@@ -209,7 +234,7 @@ export default function App() {
         reason,
         actor: user.name
       });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Cita cancelada.');
     } catch (err) {
       showToast(err.message);
@@ -222,7 +247,7 @@ export default function App() {
         ...payload,
         actor: user.name
       });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Cita actualizada.');
     } catch (err) {
       showToast(err.message);
@@ -235,7 +260,7 @@ export default function App() {
         user: user.name,
         actor: user.name
       });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Inscripción realizada correctamente.');
     } catch (err) {
       showToast(err.message);
@@ -245,7 +270,7 @@ export default function App() {
   const handleUnenroll = async (enrollmentId) => {
     try {
       const res = await api.unenrollActivity(enrollmentId);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Inscripción cancelada.');
     } catch (err) {
       showToast(err.message);
@@ -254,13 +279,13 @@ export default function App() {
 
   const handleMarkNotificationsRead = async () => {
     const res = await api.markAllNotificationsRead();
-    if (res.state) setState(res.state);
+    syncQueryState(res);
   };
 
   const handleSaveAvailability = async (payload) => {
     try {
       const res = await api.saveAvailability(payload);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Disponibilidad actualizada.');
       return true;
     } catch (err) {
@@ -272,7 +297,7 @@ export default function App() {
   const handleDeleteAvailability = async (payload) => {
     try {
       const res = await api.deleteAvailability(payload);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Disponibilidad bloqueada.');
     } catch (err) {
       showToast(err.message);
@@ -282,7 +307,7 @@ export default function App() {
   const handleSaveAttention = async (payload) => {
     try {
       const res = await api.saveAttention(payload);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Atención guardada.');
       return true;
     } catch (err) {
@@ -294,7 +319,7 @@ export default function App() {
   const handleSaveFollowup = async (payload) => {
     try {
       const res = await api.saveFollowup(payload);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Seguimiento registrado.');
       return true;
     } catch (err) {
@@ -306,7 +331,7 @@ export default function App() {
   const handleSaveUser = async (payload) => {
     try {
       const res = await api.saveUser({ ...payload, actor: user.name });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Usuario guardado.');
       return true;
     } catch (err) {
@@ -318,7 +343,7 @@ export default function App() {
   const handleToggleUser = async (id) => {
     try {
       const res = await api.toggleUser(id, user.name);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Estado de usuario actualizado.');
     } catch (err) {
       showToast(err.message);
@@ -328,7 +353,7 @@ export default function App() {
   const handleUpdateRole = async (id, newRole) => {
     try {
       const res = await api.updateUserRole(id, newRole, user.name);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Rol actualizado.');
     } catch (err) {
       showToast(err.message);
@@ -338,7 +363,7 @@ export default function App() {
   const handleSaveProfessional = async (payload) => {
     try {
       const res = await api.saveProfessional({ ...payload, actor: user.name });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Profesional guardado.');
       return true;
     } catch (err) {
@@ -350,7 +375,7 @@ export default function App() {
   const handleSaveService = async (payload) => {
     try {
       const res = await api.saveService({ ...payload, actor: user.name });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Servicio guardado.');
       return true;
     } catch (err) {
@@ -362,7 +387,7 @@ export default function App() {
   const handleToggleService = async (id) => {
     try {
       const res = await api.toggleService(id, user.name);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Estado del servicio actualizado.');
     } catch (err) {
       showToast(err.message);
@@ -372,7 +397,7 @@ export default function App() {
   const handleSaveActivity = async (payload) => {
     try {
       const res = await api.saveActivity({ ...payload, actor: user.name });
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Actividad guardada.');
       return true;
     } catch (err) {
@@ -384,7 +409,7 @@ export default function App() {
   const handleCancelActivity = async (id) => {
     try {
       const res = await api.cancelActivity(id, user.name);
-      if (res.state) setState(res.state);
+      syncQueryState(res);
       showToast('Actividad cancelada.');
     } catch (err) {
       showToast(err.message);

@@ -19,15 +19,16 @@
 El proyecto está estructurado bajo una arquitectura cliente-servidor separada en dos módulos principales (`frontend` y `backend`):
 
 ### Frontend (`/frontend`)
-- **React 18:** Construcción de la interfaz de usuario mediante componentes modulares y manejo de estado con Hooks.
-- **Tailwind CSS 3:** Sistema de diseño responsivo en modo oscuro personalizado, tablas de datos, modales e indicadores visuales.
-- **Vite 5:** Entorno de desarrollo y empaquetador de producción optimizado.
-- **Cliente API Híbrido (`src/services/api.js`):** Conecta la interfaz con la API REST en Node.js durante la ejecución local o en servidor, e incluye persistencia automática en `localStorage` para entornos estáticos como GitHub Pages.
+- **Lenguaje — TypeScript (`src/types/index.ts`, `tsconfig.json`):** Tipado estático de entidades, modelos de dominio y estados para detección temprana de errores.
+- **Interfaz — React 18 + Vite 5:** Construcción de la interfaz de usuario mediante componentes modulares y empaquetado de alto rendimiento.
+- **Estado y Datos — TanStack Query (`@tanstack/react-query`) & Zustand (`src/store/useAppStore.ts`):** Manejo eficiente de peticiones al servidor, caché reactiva, sincronización de mutaciones y estado global minimalista.
+- **Formularios — React Hook Form (`react-hook-form`):** Validación y gestión declarativa de formularios de autenticación y recuperación de acceso.
+- **Diseño — shadcn/ui + Tailwind CSS (`src/lib/utils.ts`, `components.json`):** Sistema de diseño consistente en modo oscuro, iconografía vectorial SVG a medida y animaciones fluidas de carga y transición entre vistas.
 
 ### Backend (`/backend`)
 - **Node.js & Express:** Servidor API RESTful encargado de la lógica de negocio, validaciones de disponibilidad, control de cupos y registro de auditoría.
 - **CORS:** Configuración de políticas de acceso entre el cliente y el servidor.
-- **Persistencia JSON (`data/db.json`):** Almacenamiento local estructurado con inicialización automática a partir de datos semilla (`data/seed.js`).
+- **Persistencia JSON (`data/db.json`) + Adaptador Local (`api.js`):** Almacenamiento persistente en servidor con inicialización automática (`data/seed.js`) y respaldo transparente en `localStorage` para despliegues estáticos en GitHub Pages.
 
 ---
 
@@ -67,6 +68,8 @@ Bienestar Estudiantil — Root/
 │       └── db.json
 └── frontend/
     ├── package.json
+    ├── tsconfig.json
+    ├── components.json
     ├── vite.config.js
     ├── tailwind.config.js
     ├── index.html
@@ -74,9 +77,16 @@ Bienestar Estudiantil — Root/
         ├── main.jsx
         ├── App.jsx
         ├── index.css
+        ├── types/
+        │   └── index.ts
+        ├── lib/
+        │   └── utils.ts
+        ├── store/
+        │   └── useAppStore.ts
         ├── services/
         │   └── api.js
         └── components/
+            ├── Icons.jsx
             ├── Common.jsx
             ├── LoginScreen.jsx
             ├── Sidebar.jsx
