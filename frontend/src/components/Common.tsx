@@ -185,3 +185,4 @@ export function TabTransitionSkeleton({ label = 'Cargando módulo...' }) {
     </div>
   );
 }
+

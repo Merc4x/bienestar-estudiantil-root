@@ -657,3 +657,4 @@ export function ProFollowup({ state, user, onSaveFollowup, showToast }) {
     </div>
   );
 }
+

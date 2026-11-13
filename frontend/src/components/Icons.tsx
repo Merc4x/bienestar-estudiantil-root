@@ -224,3 +224,4 @@ export function NavIcon({ name, className = 'w-4 h-4 shrink-0' }) {
 export function StatLogo({ type = 'calendar', className = 'w-5 h-5' }) {
   return <NavIcon name={type} className={className} />;
 }
+

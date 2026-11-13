@@ -108,3 +108,4 @@ export interface AppState {
   audit: AuditLog[];
   availability: Availability[];
 }
+
