@@ -74,8 +74,8 @@ Bienestar Estudiantil — Root/
     ├── tailwind.config.js
     ├── index.html
     └── src/
-        ├── main.jsx
-        ├── App.jsx
+        ├── main.tsx
+        ├── App.tsx
         ├── index.css
         ├── types/
         │   └── index.ts
@@ -84,16 +84,16 @@ Bienestar Estudiantil — Root/
         ├── store/
         │   └── useAppStore.ts
         ├── services/
-        │   └── api.js
+        │   └── api.ts
         └── components/
-            ├── Icons.jsx
-            ├── Common.jsx
-            ├── LoginScreen.jsx
-            ├── Sidebar.jsx
-            ├── Topbar.jsx
-            ├── StudentViews.jsx
-            ├── ProfessionalViews.jsx
-            └── AdminViews.jsx
+            ├── Icons.tsx
+            ├── Common.tsx
+            ├── LoginScreen.tsx
+            ├── Sidebar.tsx
+            ├── Topbar.tsx
+            ├── StudentViews.tsx
+            ├── ProfessionalViews.tsx
+            └── AdminViews.tsx
 ```
 
 ---
